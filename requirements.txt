@@ -1,0 +1,2 @@
+openai==0.28  # This has since been updated but be sure to use this version!!
+pyperclip
