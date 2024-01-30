@@ -19,6 +19,7 @@ This chatbot is a simple yet powerful tool designed to assist visually impaired 
 1. **Prerequisites**:
    - Python installation.
    - OpenAI and Pyperclip packages (`pip install openai pyperclip`).
+   - (`pip install -r requirements.txt`)
 
 2. **API Key**: Securely input your OpenAI API key in the script for server authentication.
 
