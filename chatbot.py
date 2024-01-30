@@ -14,7 +14,7 @@ def chat():
     - An OpenAI API key set in the openai.api_key variable.
     - The 'openai' and 'pyperclip' Python packages.
     """
-    openai.api_key = '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'  # Replace with your actual API key
+    openai.api_key = 'your OpenAI key'  # Replace with your actual API key
 
     messages = [{
         "role": "system",
