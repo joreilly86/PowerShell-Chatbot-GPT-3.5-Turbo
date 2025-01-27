@@ -2,11 +2,11 @@
 
 ## Project Overview 📖
 
-This chatbot is a simple yet powerful tool designed to assist visually impaired professionals, with a focus on civil engineering in this example. However, its versatile nature allows it to be easily adapted for various fields. It leverages OpenAI's GPT-3.5 model to generate accurate and context-aware responses. A standout feature of this chatbot is its ability to automatically copy responses to the clipboard, enhancing usability for visually impaired users. For more resources and tools for engineers interested in Python, visit [flocode.dev](https://flocode.dev).
+This chatbot is a simple yet powerful tool designed to assist visually impaired professionals, with a focus on civil engineering in this example. However, its versatile nature allows it to be easily adapted for various fields. It leverages OpenAI's GPT-4 Turbo model to generate accurate and context-aware responses. A standout feature of this chatbot is its ability to automatically copy responses to the clipboard, enhancing usability for visually impaired users. For more resources and tools for engineers interested in Python, visit [flocode.dev](https://flocode.dev).
 
 ## How It Works 🧠
 
-- **Language Model**: Utilizes OpenAI's GPT-3.5 for comprehensive language understanding and response generation. This model excels in providing detailed answers tailored to a wide array of professional queries.
+- **Language Model**: Utilizes OpenAI's GPT-4 Turbo for comprehensive language understanding and response generation. This model excels in providing detailed answers tailored to a wide array of professional queries.
 
 - **Accessibility Focused**: Designed for visually impaired users, with responses automatically copied to the clipboard for ease of use.
 
@@ -18,25 +18,35 @@ This chatbot is a simple yet powerful tool designed to assist visually impaired 
 
 1. **Prerequisites**:
    - Python installation.
-   - OpenAI and Pyperclip packages (`pip install openai==0.28 pyperclip`).
-   - You can install with the following CLI command
-         `pip install -r requirements.txt`
+   - Install required packages using the following command:
+     ```bash
+     pip install -r requirements.txt
+     ```
 
-2. **API Key**: Securely input your OpenAI API key in the script for server authentication.
+2. **Environment Variables**:
+   - Create a `.env` file in the root directory of the project.
+   - Add your OpenAI API key to the file:
+     ```env
+     OPENAI_API_KEY=your_openai_api_key
+     ```
 
 3. **Running the Chatbot**:
-   - Launch the script in a CLI.
+   - Launch the script in a CLI using:
+     ```bash
+     python chatbot.py
+     ```
    - Input your queries, and the chatbot will respond accordingly.
-   - Responses are automatically copied for immediate pasting.
+   - Responses are automatically copied to your clipboard for immediate pasting.
 
-4. **Exiting**: 
+4. **Exiting**:
    - Type 'exit' or 'quit' to close the chatbot.
 
 ## Limitations and Notes ⚠️
 
 - **Accuracy Check**: Always verify technical advice manually.
-- **API Key Security**: Keep your OpenAI API key confidential.
-- **Internet Dependency**: Requires an internet connection.
+- **API Key Security**: Keep your OpenAI API key confidential and do not share it publicly.
+- **Internet Dependency**: Requires an active internet connection.
+- **Clipboard Functionality**: Ensure `pyperclip` is installed and supported on your system for clipboard copying.
 
 ## Conclusion 🎉
 

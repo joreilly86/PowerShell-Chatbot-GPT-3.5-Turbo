@@ -1,44 +1,74 @@
-import openai
-import pyperclip
+import os
 
-def chat():
-    """
-    This function initiates a chat session using OpenAI's GPT model.
+import pyperclip  # For clipboard support
+from dotenv import load_dotenv
+from openai import OpenAI
 
-    It repeatedly prompts the user for input, sends this input to the OpenAI API,
-    and prints the AI's response. The AI's response is also copied to the clipboard.
-    
-    To end the chat session, the user can type 'exit' or 'quit'.
-    
-    Requires:
-    - An OpenAI API key set in the openai.api_key variable.
-    - The 'openai' and 'pyperclip' Python packages.
-    """
-    openai.api_key = 'your OpenAI key'  # Replace with your actual API key
+# Load environment variables from a .env file
+load_dotenv()
 
-    messages = [{
-        "role": "system",
-        "content": "You are a helpful assistant trained in civil engineering. You provide professional, accurate, and practical advice on civil engineering topics."
-    }]
+# Retrieve the OpenAI API key from the environment
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    raise ValueError("OPENAI_API_KEY is not set. Please add it to your .env file.")
+
+# Instantiate the OpenAI client
+client = OpenAI(api_key=api_key)
+
+
+def run_chatbot():
+    """Runs the chatbot with streaming responses."""
+    print("Chatbot is ready. Type 'exit' or 'quit' to end the session.\n")
+
+    # Define custom instructions for the bot
+    messages = [
+        {
+            "role": "system",
+            "content": (
+                "You are a helpful assistant for a professional civil engineer. "
+                "Follow best practices in technical communication. Provide answers "
+                "that are succinct, clear, and focused, avoiding unnecessary details or verbosity. "
+                "Prioritize professionalism and accuracy in all responses."
+            ),
+        }
+    ]
 
     while True:
         user_input = input("You: ")
-        if user_input.lower() in ['exit', 'quit']:
+        if user_input.lower() in ["exit", "quit"]:
+            print("Goodbye!")
             break
 
+        # Add the user's input to the conversation history
         messages.append({"role": "user", "content": user_input})
 
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=messages
-        )
+        try:
+            # Stream responses from OpenAI
+            stream = client.chat.completions.create(
+                model="gpt-4o",  # Default to "gpt-4o" or "gpt-4"
+                messages=messages,
+                stream=True,  # Enable streaming for real-time responses
+            )
+            print("AI: ", end="", flush=True)
+            response_content = ""
 
-        ai_response = response.choices[0].message['content']
-        print("AI:", ai_response)
-        messages.append({"role": "assistant", "content": ai_response})
+            for chunk in stream:
+                content = chunk.choices[0].delta.content
+                if content:
+                    print(content, end="", flush=True)
+                    response_content += content
 
-        # Copy AI response to clipboard
-        pyperclip.copy(ai_response)
+            print()  # Add a newline after the full response
+
+            # Add the assistant's response to the conversation history
+            messages.append({"role": "assistant", "content": response_content})
+
+            # Copy the response to the clipboard
+            pyperclip.copy(response_content)
+
+        except Exception as e:
+            print(f"An error occurred: {e}. Please check your API key or connection.")
+
 
 if __name__ == "__main__":
-    chat()
+    run_chatbot()
